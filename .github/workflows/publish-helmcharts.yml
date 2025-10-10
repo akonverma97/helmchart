@@ -1,23 +1,29 @@
-name: Publish Helm Charts to GitHub Pages
+name: Helm Package and Push
 
 on:
   push:
     branches:
       - feat/github-action
-  workflow_dispatch:
 
 jobs:
-  build-and-publish:
+  package-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup Helm CLI
+      - name: Set up Helm
         uses: azure/setup-helm@v3
         with:
           version: v3.12.0
+
+      - name: Debug repo structure
+        run: |
+          pwd
+          ls -l
+          ls -l helmchart
+          ls -l helmchart/charts
 
       - name: Package Helm charts
         run: |
@@ -29,15 +35,10 @@ jobs:
             helm package "$chart_dir" -d ./helmchart/packages
           done
 
-      - name: Create Helm repo index.yaml
+      - name: Commit and push packages
         run: |
-          helm repo index ./helmchart/packages --url https://akonverma97.github.io/helmchart
-
-      - name: Deploy to GitHub Pages branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./helmchart/packages
-          force_orphan: true
-
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ./helmchart/packages/*
+          git commit -m "Add packaged charts"
+          git push origin feat/github-action
