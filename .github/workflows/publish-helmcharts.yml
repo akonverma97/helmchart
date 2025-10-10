@@ -22,23 +22,22 @@ jobs:
         run: |
           pwd
           ls -l
-          ls -l helmchart
-          ls -l helmchart/charts
+          ls -l charts
 
       - name: Package Helm charts
         run: |
-          mkdir -p ./helmchart/packages
+          mkdir -p ./packages
           echo "Found charts:"
-          ls -d ./helmchart/charts/*/
-          for chart_dir in ./helmchart/charts/*/; do
+          ls -d ./charts/*/
+          for chart_dir in ./charts/*/; do
             echo "Packaging chart: $chart_dir"
-            helm package "$chart_dir" -d ./helmchart/packages
+            helm package "$chart_dir" -d ./packages
           done
 
       - name: Commit and push packages
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ./helmchart/packages/*
+          git add ./packages/*
           git commit -m "Add packaged charts"
           git push origin feat/github-action
