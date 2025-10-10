@@ -1,53 +1,43 @@
-name: Publish Helm Charts
+name: Publish Helm Charts to GitHub Pages
 
 on:
   push:
     branches:
-      - feat/github-action  # ✅ Your current working branch
-    paths:
-      - 'charts/**'
-      - '.github/workflows/**'
-
-  workflow_dispatch:  # ✅ Allows manual runs from GitHub UI
+      - feat/github-action
+  workflow_dispatch:
 
 jobs:
-  publish:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Helm
+      - name: Setup Helm CLI
         uses: azure/setup-helm@v3
+        with:
+          version: v3.12.0
 
-      - name: Create output folder for chart packages
-        run: mkdir -p ./helmchart/packages
-
-      - name: Package all Helm charts
+      - name: Package Helm charts
         run: |
-          for dir in ./helmchart/charts/*/; do
-            echo "Packaging chart: $dir"
-            helm package "$dir" -d ./helmchart/packages
+          mkdir -p ./helmchart/packages
+          echo "Found charts:"
+          ls -d ./helmchart/charts/*/
+          for chart_dir in ./helmchart/charts/*/; do
+            echo "Packaging chart: $chart_dir"
+            helm package "$chart_dir" -d ./helmchart/packages
           done
 
-      - name: Copy artifacthub-repo.yaml (if exists)
+      - name: Create Helm repo index.yaml
         run: |
-          if [ -f helmchart/artifacthub-repo.yaml ]; then
-            cp helmchart/artifacthub-repo.yaml helmchart/packages/
-          fi
+          helm repo index ./helmchart/packages --url https://akonverma97.github.io/helmchart
 
-      - name: Rebuild Helm index.yaml
-        run: |
-          helm repo index ./helmchart/packages \
-            --url https://akonverma97.github.io/helmchart \
-            --merge ./helmchart/index.yaml || true
-
-      - name: Deploy to GitHub Pages (gh-pages branch)
+      - name: Deploy to GitHub Pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./helmchart/packages
-          force_orphan: true  # Optional: overwrites old files
+          force_orphan: true
 
