@@ -1,58 +1,55 @@
-name: Publish Helm Charts to gh-pages
+name: Publish Helm Charts
 
 on:
   push:
     branches:
-      - feat/github-action
+      - feat/github-action  # ya aapki main working branch
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Helm
-      uses: azure/setup-helm@v3
-      with:
-        version: v3.10.0
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
 
-    - name: Package Helm charts
-      run: |
-        mkdir -p packages
-        helm package ./charts/* -d packages/
+      - name: Package Helm charts
+        run: |
+          mkdir -p packages
+          helm package charts/cronjob -d packages
+          helm package charts/helmchart -d packages
+          helm package charts/rbac -d packages
+          helm package charts/vigil -d packages
 
-    - name: Generate Helm repo index.yaml
-      run: |
-        helm repo index packages --url https://akonverma97.github.io/helmchart
-        mv packages/index.yaml .
+      - name: Create Helm repo index
+        run: |
+          helm repo index packages --url https://akonverma97.github.io/helmchart
+          mv packages/index.yaml .
 
-    - name: Prepare temporary directory for gh-pages
-      run: |
-        rm -rf gh-pages-temp || true
-        mkdir gh-pages-temp
-        cp -r packages/* gh-pages-temp/
-        cp index.yaml gh-pages-temp/
+      - name: Setup git user
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-    - name: Setup git user
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Fetch gh-pages branch
+        run: git fetch origin gh-pages
 
-    - name: Checkout gh-pages branch in worktree
-      run: |
-        git fetch origin gh-pages || git checkout --orphan gh-pages
-        git worktree prune
-        git worktree add gh-pages-temp-gh-pages origin/gh-pages
+      - name: Switch to gh-pages branch
+        run: git checkout gh-pages
 
-    - name: Replace gh-pages content and push
-      run: |
-        rm -rf gh-pages-temp-gh-pages/*
-        cp -r gh-pages-temp/* gh-pages-temp-gh-pages/
-        cd gh-pages-temp-gh-pages
-        git add .
-        git commit -m "Publish Helm charts from feat/github-action [skip ci]" || echo "No changes to commit"
-        git push origin HEAD:gh-pages
+      - name: Copy packaged charts and index.yaml
+        run: |
+          rm -rf ./*
+          cp -r packages/* ./
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Publish Helm charts from GitHub Actions [skip ci]" || echo "No changes to commit"
+          git push origin gh-pages
+
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
