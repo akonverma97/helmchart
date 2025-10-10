@@ -1,0 +1,6 @@
+name: akonverma-helm-repo
+displayName: Akonverma Helm Charts
+description: A collection of Helm charts maintained by Akon Verma
+homeURL: https://github.com/akonverma97/helmchart
+repoURL: https://akonverma97.github.io/helmchart
+type: helm
