@@ -24,7 +24,6 @@ jobs:
           helm package ./charts/rbac -d packages
           helm package ./charts/vigil -d packages
           helm package ./charts/cloudflare-ddns -d packages
-          helm package ./charts/cloudflared-tunnel -d packages
 
       - name: Create Helm repo index
         run: |
