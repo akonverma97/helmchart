@@ -1,10 +1,8 @@
-name: akonverma-helm-repo
-id: 8b534995-0c08-4a36-bcd5-d7a4e23833d5
-kind: helm
-displayName: Akonverma Helm Charts
-description: A collection of Helm charts maintained by Akon Verma
+name: helmchart-clouddrove
+displayName: Akonverma Helm Charts - Clouddrove
+description: A collection of Helm charts maintained by Akon Verma for Clouddrove
 homeURL: https://github.com/akonverma97/helmchart
-repoURL: https://akonverma97.github.io/helmchart
+repoURL: https://akonverma97.github.io/helmchart-clouddrove
 type: helm
 publisher:
   name: Akon Verma
