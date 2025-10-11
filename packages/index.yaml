@@ -15,7 +15,7 @@ entries:
     - cloudflare-ddns
     maintainers:
     - email: hello@clouddrove.com
-      name: CloudDrove Inc
+      name: Clouddrove Inc
     name: cloudflare-ddns
     sources:
     - https://github.com/favonia/cloudflare-ddns
@@ -23,6 +23,7 @@ entries:
     urls:
     - https://akonverma97.github.io/helmchart-clouddrove/cloudflare-ddns-0.1.1.tgz
     version: 0.1.1
+
   cloudflared-tunnel:
   - apiVersion: v2
     appVersion: 2024.3.0
@@ -42,6 +43,7 @@ entries:
     urls:
     - https://akonverma97.github.io/helmchart-clouddrove/cloudflared-tunnel-0.1.0.tgz
     version: 0.1.0
+
   cronjob:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -55,11 +57,12 @@ entries:
     - k8s
     maintainers:
     - email: hello@clouddrove.com
-      name: CloudDrove Inc.
+      name: Clouddrove Inc
     name: cronjob
     urls:
     - https://akonverma97.github.io/helmchart-clouddrove/cronjob-1.0.0.tgz
     version: 1.0.0
+
   helmchart:
   - apiVersion: v2
     appVersion: 1.0.1
@@ -75,18 +78,18 @@ entries:
     - helm-chart
     maintainers:
     - email: hello@clouddrove.com
-      name: CloudDrove Inc
+      name: Clouddrove Inc
     name: helmchart
     type: application
     urls:
     - https://akonverma97.github.io/helmchart-clouddrove/helmchart-1.0.1.tgz
     version: 1.0.1
+
   rbac:
   - apiVersion: v2
     appVersion: "1.0"
     created: "2025-10-11T05:39:21.540957+05:30"
-    description: Per-user namespace RBAC using ServiceAccounts and RoleBindings (no
-      SSO).
+    description: Per-user namespace RBAC using ServiceAccounts and RoleBindings (no SSO).
     digest: ce9d2b75208c188772a524e1d8d1fefde931da7e5eb776b65a0600146ee96f38
     keywords:
     - helm
@@ -95,12 +98,13 @@ entries:
     - rbac
     maintainers:
     - email: hello@clouddrove.com
-      name: Clouddrove Inc.
+      name: Clouddrove Inc
     name: rbac
     type: application
     urls:
     - https://akonverma97.github.io/helmchart-clouddrove/rbac-0.1.0.tgz
     version: 0.1.0
+
   vigil:
   - apiVersion: v2
     appVersion: 1.0.1
@@ -122,4 +126,5 @@ entries:
     urls:
     - https://akonverma97.github.io/helmchart-clouddrove/vigil-1.0.1.tgz
     version: 1.0.1
+
 generated: "2025-10-11T05:39:21.537951+05:30"
