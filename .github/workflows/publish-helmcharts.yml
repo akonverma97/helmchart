@@ -42,3 +42,4 @@ jobs:
           git add .
           git commit -m "Publish Helm charts from feat/github-action [skip ci]" || echo "No changes to commit"
           git push origin gh-pages
+          
