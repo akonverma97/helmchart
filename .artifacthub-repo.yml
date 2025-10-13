@@ -5,7 +5,7 @@ name: helmchart-clouddrove
 displayName: Akonverma Helm Charts - Clouddrove
 description: A collection of Helm charts maintained by Akon Verma for Clouddrove
 homeURL: https://github.com/akonverma97/helmchart
-repoURL: https://akonverma97.github.io/helmchart-clouddrove
+repoURL: https://github.com/akonverma97/helmchart
 type: helm
 publisher:
   name: Akon Verma
