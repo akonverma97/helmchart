@@ -24,6 +24,9 @@ jobs:
           helm package charts/* -d packages
           helm repo index packages --url https://akonverma97.github.io/helmchart
 
+      - name: Copy Artifact Hub metadata file
+        run: cp .artifacthub-repo.yml packages/
+
       - name: Deploy to gh-pages
         run: |
           git config --global user.name "github-actions[bot]"
