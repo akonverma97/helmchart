@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/github-action
+      - arti_v1
 
 jobs:
   publish:
@@ -43,6 +44,7 @@ jobs:
           # Commit and push
           cd gh-pages-temp
           git add .
-          git commit -m "Publish Helm charts from feat/github-action [skip ci]" || echo "No changes to commit"
+          git commit -m "Publish Helm charts from arti_v1 [skip ci]" || echo "No changes to commit"
+          # git commit -m "Publish Helm charts from feat/github-action [skip ci]" || echo "No changes to commit"
           git push origin gh-pages
           
