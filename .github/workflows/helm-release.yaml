@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - test_v1
     paths:
       - 'charts/helmchart/**'
       - 'charts/cronjob/**'
