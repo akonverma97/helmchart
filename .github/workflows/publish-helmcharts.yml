@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/github-action
+      - test_v2
 
 jobs:
   publish:
